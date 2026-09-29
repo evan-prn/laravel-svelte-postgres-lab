@@ -1,0 +1,19 @@
+# Secrets : chaque .env reste local, seul le modèle .env.example est versionné
+.env
+.env.*
+!.env.example
+
+# Dépendances : réinstallées depuis composer.lock et package-lock.json
+vendor/
+node_modules/
+
+# Éditeurs et systèmes
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Réglages locaux de Claude Code
+.claude/settings.local.json

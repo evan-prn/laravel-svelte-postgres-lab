@@ -1,0 +1,18 @@
+# Fins de ligne : LF dans le dépôt ET dans le dossier de travail, quel que soit core.autocrlf.
+# Un script en CRLF copié dans un conteneur Linux échoue avec « no such file or directory ».
+* text=auto eol=lf
+
+# Scripts Windows : cmd.exe attend du CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binaires : ni conversion de fins de ligne ni diff texte
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.webp  binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
