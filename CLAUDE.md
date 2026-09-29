@@ -168,6 +168,17 @@ la section « Décisions prises » ci-dessous.
 
 Mets à jour la colonne « Statut » à chaque jalon terminé.
 
+> **Point d'arrêt du 2026-09-30 vers minuit** (à retirer à la reprise). Jalon 1, branche
+> `feat/socle-postgresql`, poussée. Fait : service PostgreSQL, Laravel 13 installé et configuré
+> sur `pgsql`, erreur `could not find driver` observée. Reste, dans l'ordre :
+> 1. décommenter `intl`, `pdo_pgsql` et `pgsql` dans le `php.ini` (lignes 927, 936 et 938),
+>    puis `php artisan migrate` depuis `backend/` ;
+> 2. exploration `psql` et ses trois questions (`template0` et `template1`, schémas, `Default`
+>    de `users.id`) ;
+> 3. trancher le sort de `backend/CLAUDE.md` et `backend/AGENTS.md`, non versionnés
+>    (recommandation : les supprimer, Laravel Boost après l'entretien) ;
+> 4. `Dockerfile` backend et service `backend` (D7), puis la pull request du jalon.
+
 ### Jalon 0. Cadrage
 
 - Les décisions du premier échange.

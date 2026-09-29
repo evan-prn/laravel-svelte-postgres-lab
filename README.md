@@ -43,6 +43,19 @@ docker compose up -d --wait       # démarre PostgreSQL et attend qu'il soit pr�
 docker compose exec db psql -U lab -d lab   # console psql dans le conteneur
 ```
 
+### Backend (développement en natif)
+
+Prérequis : extensions `pdo_pgsql`, `pgsql` et `intl` activées dans le `php.ini`, base démarrée.
+
+```bash
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve                 # http://localhost:8000
+```
+
 > La suite est complétée au fil des jalons.
 
 ## Structure
