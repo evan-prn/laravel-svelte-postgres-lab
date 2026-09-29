@@ -158,7 +158,7 @@ la section « Décisions prises » ci-dessous.
 
 | Jalon | Durée visée | Statut |
 |---|---|---|
-| 0. Cadrage | 30 min | en cours (reste : dépôt distant) |
+| 0. Cadrage | 30 min | fait |
 | 1. Socle et PostgreSQL | 1h | à faire |
 | 2. Modèle de données et SQL | 1h30 | à faire |
 | 3. API Laravel | 1h30 | à faire |
