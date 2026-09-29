@@ -159,12 +159,12 @@ la section « Décisions prises » ci-dessous.
 | Jalon | Durée visée | Statut |
 |---|---|---|
 | 0. Cadrage | 30 min | fait |
-| 1. Socle et PostgreSQL | 1h | à faire |
+| 1. Socle et PostgreSQL, conteneur backend | 1h45 | en cours |
 | 2. Modèle de données et SQL | 1h30 | à faire |
 | 3. API Laravel | 1h30 | à faire |
 | 4. Front Svelte | 2h | à faire |
 | 5. Intégration continue | 45 min | à faire |
-| 6. Conteneuriser avec Apache | 1h | à faire |
+| 6. Conteneuriser avec Apache (finitions, voir D7) | 15 min | à faire |
 
 Mets à jour la colonne « Statut » à chaque jalon terminé.
 
@@ -185,6 +185,8 @@ Mets à jour la colonne « Statut » à chaque jalon terminé.
 - `.env` jamais versionné, `.env.example` versionné.
 - Projet Laravel dans `backend/`, connexion `pgsql`, première migration.
 - Prise en main de `psql` dans le conteneur : `\l`, `\dt`, `\d table`, `\x`, `\q`.
+- Service `backend` dans `compose.yaml`, avec le `Dockerfile` Apache décrit au jalon 6
+  (avancé par D7).
 - **Entretien** : PostgreSQL face à MySQL, rôle d'une migration, pourquoi `.env` n'est pas
   versionné.
 
@@ -226,6 +228,8 @@ Mets à jour la colonne « Statut » à chaque jalon terminé.
   réseau, état de chargement.
 - En développement, un proxy Vite (`server.proxy`) évite le CORS : comprendre pourquoi.
 - Un test Vitest de composant.
+- Service `frontend` dans `compose.yaml` : le build statique servi sur la même origine que l'API
+  (D7). Version minimale si le temps manque.
 - **Savoir lire l'ancienne syntaxe Svelte 3 et 4** (`export let`, `$:`, stores préfixés par `$`),
   probablement présente dans une base de code existante. J'écris en Svelte 5, mais je dois
   comprendre l'ancien.
@@ -242,6 +246,9 @@ Mets à jour la colonne « Statut » à chaque jalon terminé.
   intégration continue, livraison continue et déploiement continu.
 
 ### Jalon 6. Conteneuriser avec Apache
+
+> Avancé par D7 : le `Dockerfile` backend est écrit au jalon 1, le service `frontend` au jalon 4.
+> Il reste ici les finitions et la préparation des questions d'entretien.
 
 - `Dockerfile` backend sur l'image officielle `php:<version>-apache` : `DocumentRoot` sur
   `public/`, `mod_rewrite`, `AllowOverride All`, extension `pdo_pgsql`, droits de `www-data` sur
@@ -375,7 +382,8 @@ Avant mercredi 20h, aide-moi à produire :
 - **Domaine métier** : suivi de dossiers annuels (organisations, clients, dossiers par exercice,
   documents, gestionnaires). Vocabulaire neutre, identifiants en anglais.
 - **Environnement de développement** : A, PHP et Node en natif, PostgreSQL en conteneur.
-  Conteneurisation complète au jalon 6.
+- **Lancement complet** (D7) : `docker compose up -d --build` démarre toute l'application dans
+  des images proches de la production. Service `backend` dès le jalon 1, `frontend` au jalon 4.
 - **Dépôt GitHub** : `laravel-svelte-postgres-lab`, public, création sur confirmation explicite.
   Ce CLAUDE.md reste versionné, sans chemin contenant le nom d'utilisateur.
 - **Modes** : démo pour la plomberie (Git, Docker, configuration), guidé dès la première

@@ -140,3 +140,26 @@ Le dossier local garde son nom : le nom du dépôt distant en est indépendant.
   par l'empreinte (`@sha256:...`), superflu ici.
 - Poste de développement en PHP 8.5.6 et Node 24.19 : même branche que les versions épinglées,
   suffisant pour développer. La CI et l'image Docker utilisent les versions du tableau.
+
+---
+
+## D7. Lancer toute l'application avec Docker Compose
+
+*2026-09-29, complète D3*
+
+**Décision** : `docker compose up -d --build` construit et démarre toute l'application dans des
+images proches de la production. Le développement quotidien reste en natif (D3).
+
+| Option | Pour | Contre |
+|---|---|---|
+| **A. Docker pour lancer, natif pour développer** (retenue) | Image Apache proche de la production, démontrable depuis un simple clone, développement rapide | Deux façons de lancer ; une modification n'apparaît dans les conteneurs qu'après `--build` |
+| B. Tout en conteneurs, y compris le développement | Une seule façon de lancer, rien à installer à part Docker | Montages depuis `C:\` lents, sondage de fichiers pour Vite, conflits de droits entre Windows et `www-data` |
+| C. Conteneuriser au jalon 6 seulement | Aucun travail en plus maintenant | Le jalon 6 est le premier sacrifié si le temps manque |
+
+**Conséquences**
+
+- Le service `backend` (`php:8.5.11-apache`) arrive dès l'installation de Laravel (jalon 1), le
+  service `frontend` au jalon 4. Le jalon 6 devient un jalon de finition.
+- Développement : `docker compose up -d db`, puis Laravel et Vite en natif.
+- Dans les conteneurs, la configuration passe par des variables d'environnement, jamais par un
+  `.env` copié dans l'image.
