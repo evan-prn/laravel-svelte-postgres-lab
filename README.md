@@ -35,7 +35,15 @@ JavaScript sont figées par `composer.lock` et `package-lock.json`.
 
 ## Installation
 
-> À compléter au fil des jalons.
+### Base de données
+
+```bash
+cp .env.example .env              # identifiants de test lus par compose.yaml
+docker compose up -d --wait       # démarre PostgreSQL et attend qu'il soit prêt
+docker compose exec db psql -U lab -d lab   # console psql dans le conteneur
+```
+
+> La suite est complétée au fil des jalons.
 
 ## Structure
 
