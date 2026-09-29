@@ -103,8 +103,8 @@ Ce sont mes deux trous, c'est là que je dois produire sans aide jeudi.
 
 | Quand | Quoi |
 |---|---|
-| **Mardi 29 au soir** | Jalons 0 et 1, début du jalon 2 |
-| **Mercredi 30** | Jalons 2, 3 et 4, puis 5 si le temps le permet. **Arrêt du code à 20h au plus tard**, puis révision |
+| **Mardi 29 au soir** | Jalons 0 et 1, début du jalon 2. Réalisé : jalon 0, moitié du jalon 1 |
+| **Mercredi 30, de 10h à 20h** | Sur le PC portable : fin du jalon 1, jalons 2, 3 et 4, puis 5 si le temps le permet. **Arrêt du code à 20h au plus tard**, puis révision |
 | **Jeudi 1er au matin** | **Aucun nouveau code.** Pitch du projet, relecture de `docs/APPRENTISSAGE.md`, entraînement aux questions. Départ vers 15h15 |
 
 **Arbitrage** : si un jalon déborde, on réduit le périmètre, jamais le temps de révision. Un
@@ -168,16 +168,27 @@ la section « Décisions prises » ci-dessous.
 
 Mets à jour la colonne « Statut » à chaque jalon terminé.
 
-> **Point d'arrêt du 2026-09-30 vers minuit** (à retirer à la reprise). Jalon 1, branche
-> `feat/socle-postgresql`, poussée. Fait : service PostgreSQL, Laravel 13 installé et configuré
-> sur `pgsql`, erreur `could not find driver` observée. Reste, dans l'ordre :
-> 1. décommenter `intl`, `pdo_pgsql` et `pgsql` dans le `php.ini` (lignes 927, 936 et 938),
->    puis `php artisan migrate` depuis `backend/` ;
+> **Point d'arrêt du 2026-09-30 vers minuit** (à retirer à la reprise). Reprise à 10h **sur un
+> autre poste**, le PC portable, par `git clone` : l'historique de la conversation précédente
+> n'y est pas, ce bloc fait le lien. Jalon 1, branche `feat/socle-postgresql`, poussée. Fait :
+> service PostgreSQL, Laravel 13 installé et configuré sur `pgsql`, erreur `could not find driver`
+> observée. Reste, dans l'ordre :
+> 0. installer le poste : vérifier Git, PHP 8.5, Composer, Docker et Node 24 ; cloner la
+>    branche ; créer les deux `.env` depuis `.env.example` ; `composer install` et
+>    `php artisan key:generate` dans `backend/`. Consigner l'environnement du portable dans
+>    « Pièges connus » ;
+> 1. activer `intl`, `pdo_pgsql` et `pgsql` dans le `php.ini` du portable (décommenter les
+>    lignes `extension=`, ou copier `php.ini-development` en `php.ini` s'il n'existe pas), puis
+>    `php artisan migrate` depuis `backend/` ;
 > 2. exploration `psql` et ses trois questions (`template0` et `template1`, schémas, `Default`
 >    de `users.id`) ;
-> 3. trancher le sort de `backend/CLAUDE.md` et `backend/AGENTS.md`, non versionnés
->    (recommandation : les supprimer, Laravel Boost après l'entretien) ;
+> 3. `backend/CLAUDE.md` et `backend/AGENTS.md` (consignes Laravel Boost du squelette) n'ont pas
+>    été versionnés, donc absents du clone : rien à faire, Laravel Boost après l'entretien ;
 > 4. `Dockerfile` backend et service `backend` (D7), puis la pull request du jalon.
+>
+> Planning du mercredi : 10h à 11h30 fin du jalon 1, 11h30 à 14h45 jalon 2 (pause déjeuner
+> comprise), 14h45 à 16h30 jalon 3, 16h30 à 19h jalon 4, marge jusqu'à 20h. Jalon 5 seulement
+> en cas d'avance.
 
 ### Jalon 0. Cadrage
 
@@ -331,7 +342,7 @@ isagri_learning/
 
 ## Pièges connus sur ce poste
 
-> Environnement vérifié le 2026-09-29 : Windows 11, PowerShell 5.1, Docker 29.5 et Compose 5.1,
+> Environnement vérifié le 2026-09-29 sur le PC fixe (le portable reste à vérifier) : Windows 11, PowerShell 5.1, Docker 29.5 et Compose 5.1,
 > PHP 8.5.6 natif dans `C:\devtools\php-8.5.6-Win32-vs17-x64`, Composer 2.10, Node 24.19,
 > npm 11.17, Git 2.56, GitHub CLI 2.97. Pas de `psql` natif : passer par le conteneur. La seule
 > distribution WSL est celle de Docker Desktop.
@@ -402,7 +413,7 @@ Avant mercredi 20h, aide-moi à produire :
 - **Bonus hors feuille de route** : basculer un projet Laravel existant sur PostgreSQL, seulement
   si un jalon finit en avance.
 - **Versions épinglées** : vérifiées le 2026-09-29, voir `README.md`.
-- **Disponibilités** : non précisées, le calendrier reste la proposition par défaut.
+- **Disponibilités** : mercredi de 10h à 20h sur le PC portable, jeudi matin en révision.
 
 ---
 
