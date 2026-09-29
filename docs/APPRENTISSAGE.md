@@ -75,3 +75,57 @@ développement, Vite et Laravel tournent sur deux ports, mais le proxy Vite (`se
 relaie `/api` côté serveur : le navigateur ne voit qu'une origine. Si le front et l'API
 changeaient un jour de domaine, on configurerait les origines autorisées côté Laravel. CORS est
 une protection du navigateur : `curl` ou Postman n'y sont pas soumis.
+
+---
+
+## Jalon 1. Socle et PostgreSQL
+
+> En cours.
+
+### Concepts
+
+- **`compose.yaml`** : `name:` fixe les noms du conteneur et du volume quel que soit le dossier ;
+  `${VAR:?message}` arrête Compose si la variable manque ; `127.0.0.1:5432:5432` publie la base
+  sur la machine seule, pas sur le réseau local ; `$$` laisse une variable au shell du conteneur.
+- **Volume nommé** : géré par Docker, il survit à `docker compose down` (mais pas à
+  `down -v`).
+- **Healthcheck** : `pg_isready` répond quand le serveur accepte les connexions. Un conteneur
+  démarré n'est pas forcément prêt : `docker compose up --wait` attend l'état `healthy`.
+- **Image PostgreSQL 18** : le volume se monte sur `/var/lib/postgresql`, les données vivent
+  dans `/var/lib/postgresql/18/docker`. Monté sur l'ancien `/var/lib/postgresql/data`, rien ne
+  persisterait. Le changement prépare les montées de version majeure avec `pg_upgrade --link`.
+- **Deux `.env`** : celui de la racine est lu par Compose, `backend/.env` par Laravel. Dans un
+  conteneur, Laravel lit des variables d'environnement, qui priment sur le fichier.
+- **Laravel utilise SQLite par défaut** depuis la version 11 : `DB_CONNECTION=pgsql` pour
+  basculer.
+
+### Commandes
+
+```bash
+docker compose config --quiet            # valider compose.yaml et ses variables
+docker compose up -d --wait              # démarrer et attendre l'état healthy
+docker compose ps                        # état et ports publiés
+docker compose exec db psql -U lab -d lab
+php -m                                   # extensions PHP chargées
+php --ini                                # quel php.ini est lu
+php artisan migrate:status               # migrations jouées ou non
+```
+
+### Pièges
+
+- `Could not open input file: artisan` : `artisan` est à la racine du projet Laravel, donc se
+  placer dans `backend/`.
+- Lire une erreur de connexion avant de chercher :
+
+  | Message | Cause | Où chercher |
+  |---|---|---|
+  | `could not find driver` | extension PHP absente | `php.ini`, `php -m` |
+  | `Connection refused` | serveur injoignable ou arrêté | `docker compose ps`, port, `DB_HOST` |
+  | `password authentication failed for user` | mauvais identifiants | `.env` |
+
+- Beaucoup de tutoriels montent encore `/var/lib/postgresql/data` : faux à partir de
+  PostgreSQL 18.
+
+### Questions d'entretien
+
+> À compléter à la fin du jalon.
